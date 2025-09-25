@@ -2,6 +2,27 @@
 
 tasks=[]
 
+def confirm(prompt: str) -> bool:
+    "Ask yes/no; return True for yes."
+    while True:
+        ans = input(prompt).strip().lower()
+        if ans in {"y", "yes"}:
+            return True
+        if ans in {"n", "no"}:
+            return False
+        print("please type y or n.")
+
+
+def prompt_int(prompt: str) -> int:
+    "Prompt for an integer, retrying on invalid input."
+    while True:
+        raw = input(prompt).strip()
+        try:
+            return int(raw)
+        except ValueError:
+            print("please enter a number (e.g., 1, 2, 3)")
+
+
 def addtask(task) :
   tasks.append(task)
   print("task added!")
