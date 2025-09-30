@@ -40,10 +40,10 @@ def remove_task(task_number: int) -> bool:
 def confirm(prompt: str) -> bool:
     # supposed to ask y/n until valid
     while True:
-        ans = input(prompt).strip().lower()
-        if ans in {"y", "yes"}:
+        choice = input(prompt).strip().lower()
+        if choice in {"y", "yes"}:
             return True
-        elif ans in {"n", "no"}:
+        elif choice in {"n", "no"}:
             return False
         else:
             print("please enter y/n")
@@ -52,9 +52,9 @@ def confirm(prompt: str) -> bool:
 def prompt_int(prompt: str) -> int:
     # this should ask for a number and retry if not number
     while True:
-        val = input(prompt).strip()
-        if val.isdigit():
-            return int(val)
+        value = input(prompt).strip()
+        if value.isdigit():
+            return int(value)
         else:
             print("please enter a valid number")
 
@@ -63,9 +63,9 @@ def prompt_choice() -> str:
     # user picks 1-4
     valid = {"1", "2", "3", "4"}
     while True:
-        ch = input("enter choice: ").strip()
-        if ch in valid:
-            return ch
+        choice = input("enter choice: ").strip()
+        if choice in valid:
+            return choice
         print("please choose 1, 2, 3, or 4.")
 
 
@@ -76,19 +76,19 @@ def main() -> None:
         print("2. Show Tasks")
         print("3. Remove Task")
         print("4. Exit")
-        ch = prompt_choice()
-        if ch == "1":
-            t = input("enter task: ")
-            if add_task(t):
+        menu_choice = prompt_choice()
+        if menu_choice == "1":
+            task = input("enter task: ")
+            if add_task(task):
                 show_tasks()
-        elif ch == "2":
+        elif menu_choice == "2":
             show_tasks()
-        elif ch == "3":
+        elif menu_choice == "3":
             show_tasks()
-            n = prompt_int("enter task no to remove: ")
-            if remove_task(n):
+            task_number = prompt_int("enter task no to remove: ")
+            if remove_task(task_number):
                 show_tasks()
-        elif ch == "4":
+        elif menu_choice == "4":
             print("goodbye!")
             break
 
