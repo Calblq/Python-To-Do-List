@@ -1,39 +1,36 @@
-# toDoApp.py
+def remove_task(task_number: int) -> bool:
+    # check if number valid then confirm then remove
+    if task_number < 1 or task_number > len(tasks):
+        print("invalid task number")
+        return False
 
-tasks=[]
-
-def addtask(task) :
-  tasks.append(task)
-  print("task added!")
-
-def showTasks( ):
-    if len(tasks)==0 :
-      print("no tasks yet")
+    task = tasks[task_number - 1]
+    if confirm(f'Do you want to remove "{task}"? (y/n): '):
+        tasks.pop(task_number - 1)
+        print(f'removed: "{task}"')
+        return True
     else:
-     for i in range (len(tasks)):
-      print(i+1,".",tasks[i])
+        print("task not removed")
+        return False
 
-def removetask(tasknumber):
-    tasks.pop(tasknumber) 
-    print("task removed!!")
 
-def main():
+def confirm(prompt: str) -> bool:
+    # supposed to ask y/n until valid
     while True:
-        print("1 Add Task")
-        print("2.Show Tasks")
-        print("3.Remove Task")
-        print("4- Exit")
-        ch = input("enter choice : ")
-        if ch=="1":
-            t = input("enter task : ")
-            addtask(t)
-        elif ch=="2":
-            showTasks()
-        elif ch=="3":
-            n=int(input("enter task no to remove: "))
-            removetask(n)   
-        elif ch=="4":
-            break;
+        ans = input(prompt).strip().lower()
+        if ans in {"y", "yes"}:
+            return True
+        elif ans in {"n", "no"}:
+            return False
         else:
-            print("wrong choice!!")
-main()
+            print("please enter y/n")
+
+
+def prompt_int(prompt: str) -> int:
+    # this should ask for a number and retry if not number
+    while True:
+        val = input(prompt).strip()
+        if val.isdigit():
+            return int(val)
+        else:
+            print("please enter a valid number")
