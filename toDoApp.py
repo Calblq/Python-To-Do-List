@@ -5,17 +5,20 @@ def add_task(title: str) -> bool:
     # adds a task if not empty
     title = title.strip()
     if not title:
-        print("task cannot be empty.")
+        print("Task cannot be empty.")
+        return False
+    if any(t.lower() == title.lower() for t in tasks):
+        print("Task already exists.")
         return False
     tasks.append(title)
-    print(f'added: "{title}"')
+    print(f'Added: "{title}"')
     return True
 
 
 def show_tasks() -> None:
     # just shows the list of tasks
-    if not tasks:
-        print("no tasks yet")
+    if not tasks:   
+        print("No tasks yet")
         return
     for i, t in enumerate(tasks, start=1):
         print(f"{i}. {t}")
@@ -23,17 +26,20 @@ def show_tasks() -> None:
 
 def remove_task(task_number: int) -> bool:
     # check if number valid then confirm then remove
+    if not tasks:
+        print("No tasks to remove")
+        return False
     if task_number < 1 or task_number > len(tasks):
-        print("invalid task number")
+        print("Invalid task number")
         return False
 
     task = tasks[task_number - 1]
     if confirm(f'Do you want to remove "{task}"? (y/n): '):
         tasks.pop(task_number - 1)
-        print(f'removed: "{task}"')
+        print(f'Removed: "{task}"')
         return True
     else:
-        print("task not removed")
+        print("Task not removed")
         return False
 
 
@@ -41,22 +47,28 @@ def confirm(prompt: str) -> bool:
     # supposed to ask y/n until valid
     while True:
         choice = input(prompt).strip().lower()
+        if not choice:
+            print("Input cannot be empty.")
+            continue
         if choice in {"y", "yes"}:
             return True
         elif choice in {"n", "no"}:
             return False
         else:
-            print("please enter y/n")
+            print("Please enter Y/N")
 
 
 def prompt_int(prompt: str) -> int:
     # this should ask for a number and retry if not number
     while True:
         value = input(prompt).strip()
-        if value.isdigit():
+        if not value:
+            print("Input cannot be empty.")
+            continue
+        try:
             return int(value)
-        else:
-            print("please enter a valid number")
+        except ValueError:
+            print("Please enter a valid number")
 
 
 def prompt_choice() -> str:
@@ -64,9 +76,12 @@ def prompt_choice() -> str:
     valid = {"1", "2", "3", "4"}
     while True:
         choice = input("enter choice: ").strip()
+        if not choice:
+            print("Input cannot be empty.")
+            continue
         if choice in valid:
             return choice
-        print("please choose 1, 2, 3, or 4.")
+        print("Please choose 1, 2, 3, or 4.")
 
 
 def main() -> None:
@@ -89,7 +104,8 @@ def main() -> None:
             if remove_task(task_number):
                 show_tasks()
         elif menu_choice == "4":
-            print("goodbye!")
+            if confirm("Are you sure you want to exit? (y/n): "):
+                print("goodbye!")
             break
 
 
