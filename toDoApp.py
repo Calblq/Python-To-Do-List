@@ -1,8 +1,15 @@
+"""
+A simple command-line to-do list application.
+Users can add, view, and remove tasks.
+"""
+
 tasks: list[str] = []
 
 
 def add_task(title: str) -> bool:
-    # adds a task if not empty
+    """" Adds a new task if it is valid, not empty and not a duplicate.
+    Returns: bool - True if the task was added, False otherwise. """
+
     title = title.strip()
     if not title:
         print("Task cannot be empty.")
@@ -16,8 +23,10 @@ def add_task(title: str) -> bool:
 
 
 def show_tasks() -> None:
-    # just shows the list of tasks
-    if not tasks:   
+    """ Displays all tasks in the task list with numbering. 
+    If no tasks exist, informs the user through a message. """
+
+    if not tasks:
         print("No tasks yet")
         return
     for i, t in enumerate(tasks, start=1):
@@ -25,7 +34,9 @@ def show_tasks() -> None:
 
 
 def remove_task(task_number: int) -> bool:
-    # check if number valid then confirm then remove
+    """Removes a task by its number after user confirmation.
+    Returns: bool - True if the task was removed, False otherwise."""
+
     if not tasks:
         print("No tasks to remove")
         return False
@@ -44,7 +55,9 @@ def remove_task(task_number: int) -> bool:
 
 
 def confirm(prompt: str) -> bool:
-    # supposed to ask y/n until valid
+    """Prompts the user for a yes/no confirmation until valid input is received.
+    returns: bool - True for 'yes', False for 'no'."""
+
     while True:
         choice = input(prompt).strip().lower()
         if not choice:
@@ -59,7 +72,9 @@ def confirm(prompt: str) -> bool:
 
 
 def prompt_int(prompt: str) -> int:
-    # this should ask for a number and retry if not number
+    """Prompt the user for an interger input until a valid integer is received.
+    Returns: int - valid interger input from the user."""
+
     while True:
         value = input(prompt).strip()
         if not value:
@@ -72,7 +87,8 @@ def prompt_int(prompt: str) -> int:
 
 
 def prompt_choice() -> str:
-    # user picks 1-4
+    """Prompt the user to choose a menu option (1-4) until a valid choice is made.
+    Returns: str - the choice as a string. """
     valid = {"1", "2", "3", "4"}
     while True:
         choice = input("enter choice: ").strip()
@@ -85,6 +101,9 @@ def prompt_choice() -> str:
 
 
 def main() -> None:
+    """Main function for the to do app
+    Displays the main menu, handles user input and calls 
+    the appropriate functions until exit is chosen."""
     while True:
         print("--- To-Do Menu ---")
         print("1. Add Task")
